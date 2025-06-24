@@ -4,18 +4,18 @@ document.addEventListener('DOMContentLoaded', function () {
   const quizForm = document.getElementById('quiz-form');
   const hiddenInputsContainer = document.getElementById('hidden-inputs');
 
-  // --- NOVO: LÓGICA DO ID DE VISITANTE ---
+
   function getOrCreateVisitorId() {
     let visitorId = localStorage.getItem('lixoZeroVisitorId');
     if (!visitorId) {
-      // Se não existe ID, cria um novo e o salva no navegador do usuário
+    
       visitorId = 'user-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
       localStorage.setItem('lixoZeroVisitorId', visitorId);
     }
     return visitorId;
   }
   const visitorId = getOrCreateVisitorId();
-  // --- FIM DA NOVA LÓGICA ---
+
 
   const minhasPerguntas = [
     {
@@ -103,13 +103,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     hiddenInputsContainer.innerHTML = '';
 
-    // --- NOVO: ADICIONA O ID DE VISITANTE AO FORMULÁRIO ---
+  
     const visitorIdInput = document.createElement('input');
     visitorIdInput.type = 'hidden';
     visitorIdInput.name = 'ID_do_Visitante';
     visitorIdInput.value = visitorId;
     hiddenInputsContainer.appendChild(visitorIdInput);
-    // --- FIM DA NOVA ADIÇÃO ---
+   
 
     minhasPerguntas.forEach((perguntaAtual, numeroPergunta) => {
       const respostaContainer = respostasContainers[numeroPergunta];
