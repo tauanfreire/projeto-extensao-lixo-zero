@@ -1,0 +1,105 @@
+/* css/quiz.css */
+
+.conteudo-quiz {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.conteudo-quiz h2 {
+  color: #388e3c;
+}
+
+.pergunta {
+  text-align: left;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 20px;
+}
+
+.pergunta p {
+  font-size: 1.1em;
+  font-weight: 500;
+  color: #2e7d32;
+  margin-bottom: 15px;
+}
+
+.opcoes label {
+  display: block;
+  background-color: #f1f8e9;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.opcoes label:hover {
+  background-color: #dcedc1;
+}
+
+.opcoes input[type="radio"] {
+  display: none; /* Esconde o botão de rádio padrão */
+}
+
+/* Estilo para quando uma opção é selecionada */
+.opcoes input[type="radio"]:checked + span {
+  font-weight: bold;
+  color: #1b5e20;
+}
+
+#submit-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+}
+
+#submit-btn:hover {
+  background-color: #45a049;
+}
+
+#resultado {
+  margin-top: 30px;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+/* Cores para feedback */
+.correta {
+  background-color: #d4edda !important; /* Verde para resposta correta */
+  border: 1px solid #c3e6cb;
+}
+
+.incorreta {
+  background-color: #f8d7da !important; /* Vermelho para resposta incorreta */
+  border: 1px solid #f5c6cb;
+}
+
+.navegacao-voltar {
+    text-align: center;
+    margin: 20px 0 40px;
+}
+
+.btn-voltar {
+    text-decoration: none;
+    background-color: #81c784;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn-voltar:hover {
+    background-color: #66bb6a;
+}
