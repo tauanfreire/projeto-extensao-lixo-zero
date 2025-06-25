@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const resultadoContainer = document.getElementById('resultado');
   const quizForm = document.getElementById('quiz-form');
   const hiddenInputsContainer = document.getElementById('hidden-inputs');
+  const submitButton = document.getElementById('submit-btn');
 
 
   function getOrCreateVisitorId() {
@@ -73,12 +74,12 @@ document.addEventListener('DOMContentLoaded', function () {
   ];
 
   function montarQuiz() {
-    // (O código desta função não muda)
     const output = [];
     minhasPerguntas.forEach((perguntaAtual, numeroPergunta) => {
       const opcoes = [];
       for (const letraOpcao in perguntaAtual.opcoes) {
         opcoes.push(
+          // O elemento <label> envolve o input para podermos colorir o fundo todo
           `<label>
               <input type="radio" name="pergunta${numeroPergunta}" value="${letraOpcao}">
               <span>${letraOpcao.toUpperCase()}: ${perguntaAtual.opcoes[letraOpcao]}</span>
@@ -96,30 +97,42 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function mostrarResultadosEPrepararEnvio(event) {
+    // 1. Impede o envio padrão do formulário, para que possamos controlar o processo
     event.preventDefault();
 
     const respostasContainers = quizContainer.querySelectorAll('.opcoes');
     let numCorretas = 0;
 
-    hiddenInputsContainer.innerHTML = '';
-
-  
+    hiddenInputsContainer.innerHTML = ''; // Limpa os inputs ocultos para garantir que não haja duplicatas
+    
     const visitorIdInput = document.createElement('input');
     visitorIdInput.type = 'hidden';
     visitorIdInput.name = 'ID_do_Visitante';
     visitorIdInput.value = visitorId;
     hiddenInputsContainer.appendChild(visitorIdInput);
    
-
+    // 2. Itera sobre cada pergunta para verificar as respostas
     minhasPerguntas.forEach((perguntaAtual, numeroPergunta) => {
       const respostaContainer = respostasContainers[numeroPergunta];
       const selector = `input[name=pergunta${numeroPergunta}]:checked`;
-      const respostaUsuario = (respostaContainer.querySelector(selector) || {}).value;
+      const inputUsuario = (respostaContainer.querySelector(selector) || {});
+      const respostaUsuario = inputUsuario.value;
 
-      if (respostaUsuario === perguntaAtual.respostaCorreta) {
-        numCorretas++;
+      // 3. Encontra o <label> da resposta CORRETA e aplica a classe 'correta' (verde)
+      const inputCorreto = respostaContainer.querySelector(`input[value=${perguntaAtual.respostaCorreta}]`);
+      if (inputCorreto) {
+        inputCorreto.parentElement.classList.add('correta');
       }
 
+      // 4. Verifica se a resposta do usuário está certa ou errada
+      if (respostaUsuario === perguntaAtual.respostaCorreta) {
+        numCorretas++;
+      } else if (respostaUsuario) { 
+        // Se o usuário respondeu e a resposta está errada, aplica a classe 'incorreta' (vermelho)
+        inputUsuario.parentElement.classList.add('incorreta');
+      }
+
+      // (A lógica de criar os inputs ocultos para envio continua a mesma)
       const hiddenInput = document.createElement('input');
       hiddenInput.type = 'hidden';
       hiddenInput.name = `Resposta_Pergunta_${numeroPergunta + 1}`;
@@ -133,11 +146,17 @@ document.addEventListener('DOMContentLoaded', function () {
     scoreInput.value = `${numCorretas} de ${minhasPerguntas.length}`;
     hiddenInputsContainer.appendChild(scoreInput);
 
-    resultadoContainer.innerHTML = `Você acertou ${numCorretas} de ${minhasPerguntas.length} perguntas! Os dados serão enviados.`;
+    // 5. Exibe a pontuação final na tela
+    resultadoContainer.innerHTML = `Você acertou ${numCorretas} de ${minhasPerguntas.length} perguntas!`;
+    
+    // 6. Desabilita o botão para impedir múltiplos envios
+    submitButton.disabled = true;
+    submitButton.textContent = 'Resultados Enviados!';
 
+    // 7. Envia o formulário após um tempo para que o usuário possa ver as cores
     setTimeout(() => {
       quizForm.submit();
-    }, 1500);
+    }, 2500); // 2.5 segundos de espera antes de enviar
   }
 
   montarQuiz();

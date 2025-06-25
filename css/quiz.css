@@ -76,12 +76,12 @@
 
 /* Cores para feedback */
 .correta {
-  background-color: #d4edda !important; /* Verde para resposta correta */
+  background-color: #4ca762 !important; /* Verde para resposta correta */
   border: 1px solid #c3e6cb;
 }
 
 .incorreta {
-  background-color: #f8d7da !important; /* Vermelho para resposta incorreta */
+  background-color: #c14d56 !important; /* Vermelho para resposta incorreta */
   border: 1px solid #f5c6cb;
 }
 
